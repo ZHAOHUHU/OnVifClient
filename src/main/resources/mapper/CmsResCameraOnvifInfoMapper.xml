@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.mapper.CmsResCameraOnvifInfoMapper">
+    <resultMap id="BaseResultMap" type="shenzhen.teamway.model.CmsResCameraOnvifInfo">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="camera_code" property="cameraCode" jdbcType="VARCHAR"/>
+        <result column="device_url" property="deviceUrl" jdbcType="VARCHAR"/>
+        <result column="media_url" property="mediaUrl" jdbcType="VARCHAR"/>
+        <result column="rtsp_url" property="rtspUrl" jdbcType="VARCHAR"/>
+        <result column="ptz_url" property="ptzUrl" jdbcType="VARCHAR"/>
+        <result column="profile_main" property="profileMain" jdbcType="VARCHAR"/>
+        <result column="profile_sub" property="profileSub" jdbcType="VARCHAR"/>
+        <result column="profile_test" property="profileTest" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <association property="cmsResCameraInfo" javaType="shenzhen.teamway.model.CmsResCameraInfo">
+            <result column="username" property="username" jdbcType="VARCHAR" />
+            <result column="password" property="password" jdbcType="VARCHAR" />
+            <result column="ip" property="ip" jdbcType="VARCHAR" />
+            <result column="port" property="port" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+    <insert id="insert" parameterType="shenzhen.teamway.model.CmsResCameraOnvifInfo">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cms_res_camera_onvif_info (camera_code, device_url, media_url,
+        rtsp_url, ptz_url, profile_main,
+        profile_sub, profile_test, update_time
+        )
+        values (#{cameraCode,jdbcType=VARCHAR}, #{deviceUrl,jdbcType=VARCHAR}, #{mediaUrl,jdbcType=VARCHAR},
+        #{rtspUrl,jdbcType=VARCHAR}, #{ptzUrl,jdbcType=VARCHAR}, #{profileMain,jdbcType=VARCHAR},
+        #{profileSub,jdbcType=VARCHAR}, #{profileTest,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, camera_code, device_url, media_url, rtsp_url, ptz_url, profile_main, profile_sub, 
+    profile_test, update_time
+    from cms_res_camera_onvif_info
+  </select>
+    <select id="selectCamera" resultMap="BaseResultMap">
+        SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE
+        <if test="code !=null">
+            and b.`code`=#{code}
+        </if>
+
+    </select>
+</mapper>

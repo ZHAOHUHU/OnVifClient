@@ -1,0 +1,43 @@
+2019-03-05 09:18:04.801 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 50 ] - Starting OnvifserviceApplication on ZHAOHONGNING with PID 23560 (E:\ideafolder\onvifservice\target\classes started by HUHU in E:\ideafolder\onvifservice)
+2019-03-05 09:18:04.819 [ main ] - [ DEBUG ] [ shenzhen.teamway.OnvifserviceApplication : 53 ] - Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-03-05 09:18:04.821 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 675 ] - No active profile set, falling back to default profiles: default
+2019-03-05 09:18:10.826 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 59 ] - Started OnvifserviceApplication in 6.703 seconds (JVM running for 7.845)
+2019-03-05 09:18:54.521 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 50 ] - Starting OnvifserviceApplication on ZHAOHONGNING with PID 22900 (E:\ideafolder\onvifservice\target\classes started by HUHU in E:\ideafolder\onvifservice)
+2019-03-05 09:18:54.529 [ main ] - [ DEBUG ] [ shenzhen.teamway.OnvifserviceApplication : 53 ] - Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-03-05 09:18:54.530 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 675 ] - No active profile set, falling back to default profiles: default
+2019-03-05 09:18:57.860 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 59 ] - Started OnvifserviceApplication in 3.689 seconds (JVM running for 4.782)
+2019-03-05 09:22:10.814 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 50 ] - Starting OnvifserviceApplication on ZHAOHONGNING with PID 24544 (E:\ideafolder\onvifservice\target\classes started by HUHU in E:\ideafolder\onvifservice)
+2019-03-05 09:22:10.817 [ main ] - [ DEBUG ] [ shenzhen.teamway.OnvifserviceApplication : 53 ] - Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-03-05 09:22:10.818 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 675 ] - No active profile set, falling back to default profiles: default
+2019-03-05 09:22:14.106 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 59 ] - Started OnvifserviceApplication in 3.705 seconds (JVM running for 4.805)
+2019-03-05 09:23:05.638 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 50 ] - Starting OnvifserviceApplication on ZHAOHONGNING with PID 3840 (E:\ideafolder\onvifservice\target\classes started by HUHU in E:\ideafolder\onvifservice)
+2019-03-05 09:23:05.642 [ main ] - [ DEBUG ] [ shenzhen.teamway.OnvifserviceApplication : 53 ] - Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-03-05 09:23:05.643 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 675 ] - No active profile set, falling back to default profiles: default
+2019-03-05 09:23:09.271 [ main ] - [ INFO  ] [ shenzhen.teamway.OnvifserviceApplication : 59 ] - Started OnvifserviceApplication in 3.933 seconds (JVM running for 4.956)
+2019-03-05 09:23:09.408 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:23:09.437 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:23:09.466 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:24:09.471 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:24:09.472 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:24:09.474 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:25:09.478 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:25:09.479 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:25:09.481 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:26:09.484 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:26:09.485 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:26:09.488 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:27:09.490 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:27:09.490 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:27:09.492 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:28:09.494 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:28:09.495 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:28:09.498 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:29:09.501 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:29:09.502 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:29:09.504 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:30:09.508 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:30:09.509 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:30:09.511 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
+2019-03-05 09:31:09.514 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==>  Preparing: SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE 
+2019-03-05 09:31:09.514 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - ==> Parameters: 
+2019-03-05 09:31:09.516 [ scheduling-1 ] - [ DEBUG ] [ s.t.m.CmsResCameraOnvifInfoMapper.selectCamera : 159 ] - <==      Total: 0
