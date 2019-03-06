@@ -1,5 +1,7 @@
 package shenzhen.teamway.onvifservice.test;
 
+import java.util.Optional;
+
 /**
  * @program: onvifservice
  * @description:
@@ -30,5 +32,10 @@ public class Boy {
     public Boy(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public static void main(String[] args) {
+        Boy boy=null;
+        Optional.ofNullable(boy);
     }
 }

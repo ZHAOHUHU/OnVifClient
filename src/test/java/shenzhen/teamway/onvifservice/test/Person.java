@@ -2,6 +2,7 @@ package shenzhen.teamway.onvifservice.test;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * @program: onvifservice
@@ -34,11 +35,9 @@ public class Person {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        final String s = new Person().toString();
-        System.out.println(s);
-        final Person amy = new Person(new Boy("amy", 4567498));
-        System.out.println(amy.toString());
-
+        Scanner scanner=new Scanner("aa");
+        final String s1 = scanner.toString();
+        System.out.println(s1);
 
     }
 }

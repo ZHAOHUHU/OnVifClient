@@ -28,9 +28,9 @@ public class RestConfig {
     @Bean
     public ClientHttpRequestFactory httpRequestFactory() {
         final HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient());
-        factory.setReadTimeout(20000);
-        factory.setConnectTimeout(20000);
-        factory.setConnectionRequestTimeout(20000);
+        factory.setReadTimeout(200000);
+        factory.setConnectTimeout(10000);
+        factory.setConnectionRequestTimeout(10000);
         return factory;
     }
 

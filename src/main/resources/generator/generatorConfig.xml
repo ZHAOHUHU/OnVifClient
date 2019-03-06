@@ -38,7 +38,7 @@
 		</commentGenerator>
 		<!--数据库链接URL，用户名、密码 -->
 		<jdbcConnection
-			driverClass="${spring.datasource.driver-class-name}"
+			driverClass="com.mysql.jdbc.Driver"
 			connectionURL="${spring.datasource.url}"
 			userId="${spring.datasource.username}"
 			password="${spring.datasource.password}">
@@ -76,7 +76,7 @@
 			12，enableUpdateByExample（默认true）：MyBatis3Simple为false，指定是否生成动态修改语句（只修改对象中不为空的属性）； 
 			13，modelType：参考context元素的defaultModelType，相当于覆盖； 14，delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性） 
 			15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers -->
-		<table tableName="cms_res_camera_onvif_info" enableSelectByExample="true"
+		<table tableName="cms_data_alarm_real" enableSelectByExample="true"
 			enableDeleteByExample="true" enableCountByExample="true"
 			enableUpdateByExample="true">
 			<!--mysql 配置 -->

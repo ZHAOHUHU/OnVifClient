@@ -7,5 +7,5 @@ package shenzhen.teamway.config;
  * @create: 2019-03-04 16:33
  **/
 public class UrlRequestMapping {
-    public static final String getPresentUrl = "http://192.168.12.170:8081/getPresets";
+    public static final String getPresentUrl = "http://192.168.12.188:8081/";
 }

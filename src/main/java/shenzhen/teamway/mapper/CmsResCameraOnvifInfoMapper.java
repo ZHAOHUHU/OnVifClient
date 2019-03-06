@@ -11,4 +11,6 @@ public interface CmsResCameraOnvifInfoMapper {
     List<CmsResCameraOnvifInfo> selectAll();
 
     List<CmsResCameraOnvifInfo> selectCamera(@Param("code") String code);
+
+    CmsResCameraOnvifInfo selectOnvifCamera(@Param("code") String code);
 }

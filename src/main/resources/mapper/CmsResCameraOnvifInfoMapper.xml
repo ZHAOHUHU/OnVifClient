@@ -13,10 +13,10 @@
         <result column="profile_test" property="profileTest" jdbcType="VARCHAR"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <association property="cmsResCameraInfo" javaType="shenzhen.teamway.model.CmsResCameraInfo">
-            <result column="username" property="username" jdbcType="VARCHAR" />
-            <result column="password" property="password" jdbcType="VARCHAR" />
-            <result column="ip" property="ip" jdbcType="VARCHAR" />
-            <result column="port" property="port" jdbcType="INTEGER" />
+            <result column="username" property="username" jdbcType="VARCHAR"/>
+            <result column="password" property="password" jdbcType="VARCHAR"/>
+            <result column="ip" property="ip" jdbcType="VARCHAR"/>
+            <result column="port" property="port" jdbcType="INTEGER"/>
         </association>
     </resultMap>
     <insert id="insert" parameterType="shenzhen.teamway.model.CmsResCameraOnvifInfo">
@@ -37,8 +37,15 @@
     profile_test, update_time
     from cms_res_camera_onvif_info
   </select>
+    <!---->
+    <select id="selectOnvifCamera" resultType="shenzhen.teamway.model.CmsResCameraOnvifInfo">
+    select id, camera_code, device_url, media_url, rtsp_url, ptz_url, profile_main, profile_sub,
+    profile_test, update_time
+    from cms_res_camera_onvif_info where camera_code=#{code}
+  </select>
     <select id="selectCamera" resultMap="BaseResultMap">
-        SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where a.camera_code = b. CODE
+        SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where
+        a.camera_code = b. CODE
         <if test="code !=null">
             and b.`code`=#{code}
         </if>
