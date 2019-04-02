@@ -8,25 +8,28 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
-    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
     <!-- 彩色日志格式 -->
-    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <!-- 定义日志的根目录 -->
     <property name="LOG_HOME" value="./log"/>
     <!-- 定义日志文件名称 -->
     <property name="appName" value="OnvifClient"></property>
     <!-- ch.qos.logback.core.ConsoleAppender 表示控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-       <!-- <Encoding>UTF-8</Encoding>-->
+        <!-- <Encoding>UTF-8</Encoding>-->
         <!--
         日志输出格式：%d表示日期时间，%thread表示线程名，%-5level：级别从左显示5个字符宽度
         %logger{50} 表示logger名字最长50个字符，否则按照句点分割。 %msg：日志消息，%n是换行符
         -->
-       <!-- <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n</pattern>
-        </layout>-->
+        <!-- <layout class="ch.qos.logback.classic.PatternLayout">
+             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n</pattern>
+         </layout>-->
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level -&#45;&#45; [%thread] %logger Line:%-3L - %msg%n</pattern>-->
@@ -55,7 +58,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名
         TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。
         -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--
             滚动时产生的文件的存放位置及文件名称 %d{yyyy-MM-dd}：按天进行日志滚动
             %i：当文件大小超过maxFileSize时，按照i进行文件滚动
@@ -66,13 +69,11 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
             且maxHistory是365，则只保存最近365天的文件，删除之前的旧文件。注意，删除旧文件是，
             那些为了归档而创建的目录也会被删除。
             -->
-            <MaxHistory>3</MaxHistory>
+            <MaxHistory>2</MaxHistory>
             <!--
             当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动 注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，必须配置timeBasedFileNamingAndTriggeringPolicy
             -->
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>10MB</maxFileSize>
         </rollingPolicy>
         <!--
         日志输出格式：%d表示日期时间，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %logger{50} 表示logger名字最长50个字符，否则按照句点分割。 %msg：日志消息，%n是换行符
@@ -90,20 +91,18 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     false：表示只用当前logger的appender-ref，true：表示当前logger的appender-ref和rootLogger的appender-ref都有效
     -->
     <!-- mybatis logger -->
-    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="debug" />
-    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="debug" />
-    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="debug" />
-    <logger name="java.sql.Connection" level="debug" />
-    <logger name="java.sql.Statement" level="debug" />
-    <logger name="java.sql.PreparedStatement" level="debug" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="debug"/>
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="debug"/>
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="debug"/>
+    <logger name="java.sql.Connection" level="debug"/>
+    <logger name="java.sql.Statement" level="debug"/>
+    <logger name="java.sql.PreparedStatement" level="debug"/>
     <!-- Spring framework logger -->
-    <logger name="org.springframework" level="debug" additivity="false"></logger>
+    <logger name="org.springframework" level="debug" additivity="false"/>
+    <logger name="shenzhen.teamway" level="info" additivity="false"/>
 
-    <logger name="shenzhen.teamway" level="info" additivity="false">
-        <appender-ref ref="console"/>
-    </logger>
     <logger name="shenzhen.teamway" level="debug" additivity="false">
-         <appender-ref ref="appLogAppender"/>
+        <appender-ref ref="appLogAppender"/>
 
     </logger>
     <!--
@@ -112,6 +111,6 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     -->
     <root level="info">
         <appender-ref ref="console"/>
-       <!-- <appender-ref ref="appLogAppender"/>-->
+         <appender-ref ref="appLogAppender"/>
     </root>
 </configuration>

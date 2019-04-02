@@ -19,6 +19,8 @@
             <result column="port" property="port" jdbcType="INTEGER"/>
         </association>
     </resultMap>
+
+
     <insert id="insert" parameterType="shenzhen.teamway.model.CmsResCameraOnvifInfo">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
@@ -44,11 +46,50 @@
     from cms_res_camera_onvif_info where camera_code=#{code}
   </select>
     <select id="selectCamera" resultMap="BaseResultMap">
-        SELECT a.*,b.ip,b.`port`,b.username,b.`password` FROM cms_res_camera_onvif_info a,cms_res_camera_info b where
+        SELECT a.*,b.* FROM cms_res_camera_onvif_info a,cms_res_camera_info b where
         a.camera_code = b. CODE
         <if test="code !=null">
             and b.`code`=#{code}
         </if>
+        <if test="ip !=null">
+            and b.ip=#{ip}
+        </if>
 
     </select>
+
+    <insert id="insertAndUpdate" parameterType="shenzhen.teamway.model.CmsResCameraOnvifInfo">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cms_res_camera_onvif_info (camera_code, device_url, media_url,
+        rtsp_url, ptz_url, profile_main,
+        profile_sub, profile_test, update_time
+        )
+        values (#{cameraCode,jdbcType=VARCHAR}, #{deviceUrl,jdbcType=VARCHAR}, #{mediaUrl,jdbcType=VARCHAR},
+        #{rtspUrl,jdbcType=VARCHAR}, #{ptzUrl,jdbcType=VARCHAR}, #{profileMain,jdbcType=VARCHAR},
+        #{profileSub,jdbcType=VARCHAR}, #{profileTest,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+        ) ON DUPLICATE KEY update camera_code = #{cameraCode,jdbcType=VARCHAR},
+        <if test="deviceUrl!=null">
+            device_url = #{deviceUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="mediaUrl!=null">
+            media_url = #{mediaUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="rtspUrl!=null">
+            rtsp_url = #{rtspUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="ptzUrl!=null">
+            ptz_url = #{ptzUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="profileMain!=null">
+            profile_main = #{profileMain,jdbcType=VARCHAR},
+        </if>
+        <if test="profileSub!=null">
+            profile_sub = #{profileSub,jdbcType=VARCHAR},
+        </if>
+        <if test="profileTest!=null">
+            profile_test = #{profileTest,jdbcType=VARCHAR},
+        </if>
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </insert>
 </mapper>

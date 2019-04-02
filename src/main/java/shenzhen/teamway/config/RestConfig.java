@@ -28,9 +28,9 @@ public class RestConfig {
     @Bean
     public ClientHttpRequestFactory httpRequestFactory() {
         final HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient());
-        factory.setReadTimeout(200000);
-        factory.setConnectTimeout(10000);
-        factory.setConnectionRequestTimeout(10000);
+        factory.setReadTimeout(2000000);
+        factory.setConnectTimeout(20000);
+        factory.setConnectionRequestTimeout(20000);
         return factory;
     }
 
@@ -45,8 +45,8 @@ public class RestConfig {
     public HttpClient httpClient() {
         Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create().register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https", SSLConnectionSocketFactory.getSocketFactory()).build();
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
-        connectionManager.setMaxTotal(100);
-        connectionManager.setDefaultMaxPerRoute(5);
+        connectionManager.setMaxTotal(1000);
+        connectionManager.setDefaultMaxPerRoute(500);
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(8000).setConnectTimeout(8000).setConnectionRequestTimeout(8000).build();
         return HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setConnectionManager(connectionManager).build();
     }

@@ -10,7 +10,9 @@ public interface CmsResCameraOnvifInfoMapper {
 
     List<CmsResCameraOnvifInfo> selectAll();
 
-    List<CmsResCameraOnvifInfo> selectCamera(@Param("code") String code);
+    List<CmsResCameraOnvifInfo> selectCamera(@Param("code") String code,@Param("ip") String ip);
 
     CmsResCameraOnvifInfo selectOnvifCamera(@Param("code") String code);
+
+    int insertAndUpdate(CmsResCameraOnvifInfo record);
 }

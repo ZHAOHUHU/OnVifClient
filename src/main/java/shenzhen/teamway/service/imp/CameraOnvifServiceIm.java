@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shenzhen.teamway.config.UrlRequestMapping;
 import shenzhen.teamway.mapper.CmsResCameraOnvifInfoMapper;
 import shenzhen.teamway.mapper.CmsResCameraPresetInfoMapper;
@@ -29,7 +30,7 @@ import java.util.*;
  * @create: 2019-03-04 10:15
  **/
 @Service
-@PropertySource(value = "classpath:application.properties")
+
 public class CameraOnvifServiceIm implements CameraOnvifService {
     private Queue<CmsResCameraOnvifInfo> q = new LinkedList();
     @Value("${request.url}")
@@ -55,11 +56,19 @@ public class CameraOnvifServiceIm implements CameraOnvifService {
      */
     @Override
     public List<CmsResCameraOnvifInfo> getAllCamera() {
-        final List<CmsResCameraOnvifInfo> cmsResCameraOnvifInfos = cmsResCameraOnvifInfoMapper.selectCamera(null);
+        final List<CmsResCameraOnvifInfo> cmsResCameraOnvifInfos = cmsResCameraOnvifInfoMapper.selectCamera(null, null);
         return cmsResCameraOnvifInfos;
     }
 
-    @Scheduled(fixedDelay = 100000)
+    /**
+     * @Author: Zhao Hong Ning
+     * @Description: //每天23点27分50秒时执行
+     * @Scheduled(cron = "50 27 23 * * ?")
+     * @Date: 2019/3/7
+     * @param:
+     * @return: void
+     */
+    @Scheduled(cron = "${getPresentFromDB}")
     public void getPresentFromDB() {
         final List<CmsResCameraOnvifInfo> cameras = getAllCamera();
         for (CmsResCameraOnvifInfo camera : cameras) {
@@ -74,40 +83,22 @@ public class CameraOnvifServiceIm implements CameraOnvifService {
      * @param:
      * @return: void
      */
-    @Scheduled(fixedDelay = 5000)
-    public void setPresent() {
+
+
+    @Scheduled(fixedDelay = 10000)
+    public void getPresent() {
         final CmsResCameraOnvifInfo camera = q.poll();
         if (camera != null) {
-            GetPresetsMessageRequest request = new GetPresetsMessageRequest();
-            GetPresetsRequestBody body = new GetPresetsRequestBody();
-            final String uuid = UUID.randomUUID().toString();
-            String cameraCode = camera.getCameraCode();
-            body.setProfile(camera.getProfileMain());
-            body.setPtzUrl(camera.getPtzUrl());
-            request.setGetPresets(body);
-            request.setAddress(camera.getCmsResCameraInfo().getIp());
-            request.setCommand("getPresets");
-            request.setPort(String.valueOf(camera.getCmsResCameraInfo().getPort()));
-            request.setUser(camera.getCmsResCameraInfo().getUsername());
-            request.setPassword(camera.getCmsResCameraInfo().getPassword());
-            request.setVersion(1);
-            request.setUuid(uuid);
+            final GetPresetsMessageRequest request = getPresetsMessageRequest(camera);
+            if (request == null) {
+                return;
+            }
             final String s = redisUtils.postSend(url + "getPresets", request);
             final GetPresetsMessageResponse getPresetsMessageResponse = redisUtils.string2Object(s, GetPresetsMessageResponse.class);
             final String uuid2 = getPresetsMessageResponse.getUuid();
-            if (uuid.equals(uuid2)) {
-                //执行删除操作
-                cmsResCameraPresetInfoMapper.deleteByCode(cameraCode);
-                //插入数据库
-                final List<CmsResCameraPresetInfo> cmsResCameraPresetInfos = getCmsResCameraPresetInfos(getPresetsMessageResponse, cameraCode);
-                for (CmsResCameraPresetInfo cmsResCameraPresetInfo : cmsResCameraPresetInfos) {
-                    final int insert = cmsResCameraPresetInfoMapper.insert(cmsResCameraPresetInfo);
-                    if (insert == 1) {
-                        log.info("成功插入数据库" + insert + "条消息");
-                    } else {
-                        log.error("插入数据库失败");
-                    }
-                }
+            if (request.getUuid().equals(uuid2)) {
+                deleteAndInsert(camera.getCameraCode(), getPresetsMessageResponse);
+
             } else {
                 log.error("返回的uuid不一致");
             }
@@ -132,11 +123,64 @@ public class CameraOnvifServiceIm implements CameraOnvifService {
         return list;
     }
 
+    /**
+     * @Author: Zhao Hong Ning
+     * @Description:封装请求体
+     * @Date: 2019/3/7
+     * @param: camera
+     * @return: shenzhen.teamway.pojo.GetPresetsMessageRequest
+     */
+    public GetPresetsMessageRequest getPresetsMessageRequest(CmsResCameraOnvifInfo camera) {
+        GetPresetsMessageRequest request = new GetPresetsMessageRequest();
+        GetPresetsRequestBody body = new GetPresetsRequestBody();
+        final String uuid = UUID.randomUUID().toString();
+        if (camera.getProfileMain() != null && camera.getPtzUrl() != null) {
+            body.setProfile(camera.getProfileMain());
+            body.setPtzUrl(camera.getPtzUrl());
+            request.setGetPresets(body);
+            request.setAddress(camera.getCmsResCameraInfo().getIp());
+            request.setCommand("getPresets");
+            request.setPort(String.valueOf(camera.getCmsResCameraInfo().getPort()));
+            request.setUser(camera.getCmsResCameraInfo().getUsername());
+            request.setPassword(camera.getCmsResCameraInfo().getPassword());
+            request.setVersion(1);
+            request.setUuid(uuid);
+            return request;
+        } else {
+            return null;
+        }
+    }
+
     public Queue<CmsResCameraOnvifInfo> getQ() {
         return q;
     }
 
     public void setQ(Queue<CmsResCameraOnvifInfo> q) {
         this.q = q;
+    }
+
+    /**
+     * @Author: Zhao Hong Ning
+     * @Description:就是执行更新操作有责更新无则插入
+     * @Date: 2019/4/1
+     * @param: code
+     * @param: getPresetsMessageResponse
+     * @return: void
+     */
+    @Transactional
+    public void deleteAndInsert(String code, GetPresetsMessageResponse getPresetsMessageResponse) {
+        //执行删除操作
+        final int i = cmsResCameraPresetInfoMapper.deleteByCode(code);
+        log.info("成功删除了数据的条数：" + i);
+        //插入数据库
+        final List<CmsResCameraPresetInfo> cmsResCameraPresetInfos = getCmsResCameraPresetInfos(getPresetsMessageResponse, code);
+        for (CmsResCameraPresetInfo cmsResCameraPresetInfo : cmsResCameraPresetInfos) {
+            final int insert = cmsResCameraPresetInfoMapper.insert(cmsResCameraPresetInfo);
+            if (insert == 1) {
+                log.info("成功插入数据库" + insert + "条消息");
+            } else {
+                log.error("插入数据库失败");
+            }
+        }
     }
 }

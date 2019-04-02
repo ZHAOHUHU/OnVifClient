@@ -1,15 +1,25 @@
 package shenzhen.teamway.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import shenzhen.teamway.mapper.CmsResCameraInfoMapper;
 import shenzhen.teamway.mapper.CmsResCameraOnvifInfoMapper;
 import shenzhen.teamway.mapper.CmsResCameraPresetInfoMapper;
+import shenzhen.teamway.model.CmsResCameraInfo;
 import shenzhen.teamway.model.CmsResCameraOnvifInfo;
+import shenzhen.teamway.pojo.CommandResultMessage;
 import shenzhen.teamway.pojo.GetPresetsMessageRequest;
+import shenzhen.teamway.pojo.SetDateAndTimeMessageRequest;
 import shenzhen.teamway.pojo.request.GetPresetsRequestBody;
+import shenzhen.teamway.pojo.request.SetDateAndTimeRequestBody;
+import shenzhen.teamway.util.OtherUtils;
+import shenzhen.teamway.util.RedisUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,28 +30,35 @@ import java.util.UUID;
  * @create: 2019-03-06 16:47
  **/
 @Service
-//@PropertySource(value = "classpath:application.properties")
 public class UpdateTimeImp {
+    @Value("${request.url}")
+    private String url;
     @Autowired
-    CmsResCameraOnvifInfoMapper cmsResCameraOnvifInfoMapper;
+    private RedisUtils redisUtils;
+    @Autowired
+    CmsResCameraInfoMapper cmsResCameraInfoMapper;
 
-    //@Scheduled(cron = "")
+    @Scheduled(cron = "${updateTime}")
     public void updateTime() {
-        final List<CmsResCameraOnvifInfo> cmsResCameraOnvifInfos = cmsResCameraOnvifInfoMapper.selectCamera(null);
-        for (CmsResCameraOnvifInfo camera : cmsResCameraOnvifInfos) {
-            GetPresetsMessageRequest request = new GetPresetsMessageRequest();
-            GetPresetsRequestBody body = new GetPresetsRequestBody();
+        final List<CmsResCameraInfo> cmsResCameraInfos = cmsResCameraInfoMapper.selectAll();
+        for (CmsResCameraInfo camera : cmsResCameraInfos) {
+            final SetDateAndTimeMessageRequest request = new SetDateAndTimeMessageRequest();
+            final SetDateAndTimeRequestBody requestBody = new SetDateAndTimeRequestBody();
             final String uuid = UUID.randomUUID().toString();
-            String cameraCode = camera.getCameraCode();
-            body.setProfile(camera.getProfileMain());
-            body.setPtzUrl(camera.getPtzUrl());
-            request.setGetPresets(body);
-            request.setAddress(camera.getCmsResCameraInfo().getIp());
-            request.setCommand("getPresets");
-            request.setPort(String.valueOf(camera.getCmsResCameraInfo().getPort()));
-            request.setUser(camera.getCmsResCameraInfo().getUsername());
-            request.setPassword(camera.getCmsResCameraInfo().getPassword());
+            request.setAddress(camera.getIp());
+            request.setCommand("setDateAndTime");
+            request.setPort(String.valueOf(camera.getPort()));
+            request.setUser(camera.getUsername());
+            request.setPassword(camera.getPassword());
             request.setVersion(1);
+            request.setUuid(uuid);
+            final String date2String = OtherUtils.getDate2String(new Date());
+            requestBody.setDateTime(date2String);
+            requestBody.setTimeZone("CST-8");
+            request.setSetDateAndTime(requestBody);
+            final String s = redisUtils.postSend(url + request.getCommand(), request);
+            OtherUtils.sleepThread(1000);
+            final CommandResultMessage commandResultMessage = redisUtils.string2Object(s, CommandResultMessage.class);
         }
     }
 }

@@ -32,4 +32,7 @@
         delete from cms_res_camera_preset_info
         where camera_code = #{code}
     </delete>
+    <delete id="deleteByCodeAndIndex">
+        DELETE from cms_res_camera_preset_info where camera_code=#{code} and preset_index=#{index}
+    </delete>
 </mapper>

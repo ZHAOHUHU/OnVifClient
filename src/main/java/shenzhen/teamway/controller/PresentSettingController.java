@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shenzhen.teamway.config.UrlRequestMapping;
 import shenzhen.teamway.mapper.CmsResCameraOnvifInfoMapper;
 import shenzhen.teamway.model.CmsResCameraOnvifInfo;
 import shenzhen.teamway.pojo.CommandResultMessage;
 import shenzhen.teamway.pojo.SetPrestMessageRequest;
 import shenzhen.teamway.service.CmeraSetPreset;
+import shenzhen.teamway.service.CmsResCameraInfoService;
 import shenzhen.teamway.service.imp.CameraOnvifServiceIm;
+import shenzhen.teamway.util.OtherUtils;
 import shenzhen.teamway.util.RedisUtils;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 /**
  * @program: onvifservice
@@ -35,6 +35,9 @@ public class PresentSettingController {
     CameraOnvifServiceIm cameraOnvifServiceIm;
     @Autowired
     private RedisUtils redisUtils;
+
+    @Autowired
+    CmsResCameraInfoService cmsResCameraInfoService;
     @Autowired
     CmsResCameraOnvifInfoMapper cmsResCameraOnvifInfoMapper;
 
@@ -57,10 +60,11 @@ public class PresentSettingController {
         CommandResultMessage message = null;
         if (request != null) {
             final String send = redisUtils.postSend(url + "setPreset", request);
+            OtherUtils.sleepThread(1000);
             message = redisUtils.string2Object(send, CommandResultMessage.class);
             final boolean result = message.isResult();
             if (result) {
-                final List<CmsResCameraOnvifInfo> cmsResCameraOnvifInfos = cmsResCameraOnvifInfoMapper.selectCamera(cameraCode);
+                final List<CmsResCameraOnvifInfo> cmsResCameraOnvifInfos = cmsResCameraOnvifInfoMapper.selectCamera(cameraCode,null);
                 if (cmsResCameraOnvifInfos.size() == 1) {
                     //添加到队列里
                     cameraOnvifServiceIm.getQ().offer(cmsResCameraOnvifInfos.get(0));
@@ -76,9 +80,20 @@ public class PresentSettingController {
         return message;
     }
 
-    @GetMapping("aa")
+    @RequestMapping(value = "gotoPreset", method = RequestMethod.POST)
     @ResponseBody
-    public String vo() {
-        return "ss";
+    public CommandResultMessage gotoPreset(@RequestBody Map<String, String> m) {
+        final String token = m.get("token");
+        final String cameraCode = m.get("cameraCode");
+        final CommandResultMessage commandResultMessage = cmeraSetPreset.gotoPreset(cameraCode, token);
+        return commandResultMessage;
+    }
+
+    @RequestMapping(value = "reboot", method = RequestMethod.POST)
+    @ResponseBody
+    public CommandResultMessage reboot(@RequestBody Map<String, String> m) {
+        final String ip = m.get("cameraAddr");
+        final CommandResultMessage result = cmsResCameraInfoService.getResult(ip);
+        return result;
     }
 }

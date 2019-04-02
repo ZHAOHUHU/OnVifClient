@@ -1,5 +1,7 @@
 package shenzhen.teamway.service;
 
+import shenzhen.teamway.model.CameraBean;
+import shenzhen.teamway.pojo.CommandResultMessage;
 import shenzhen.teamway.pojo.SetPrestMessageRequest;
 
 /**
@@ -11,4 +13,10 @@ import shenzhen.teamway.pojo.SetPrestMessageRequest;
 public interface CmeraSetPreset {
 
     public SetPrestMessageRequest setPrestMessageRequest(String token, String cameraCode, String presetName);
+
+    public CameraBean setUDPPrestMessageRequest(String ip, Integer index, String presetName);
+
+    public CommandResultMessage gotoPreset(String cameraCode, String token);
+
+
 }

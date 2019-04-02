@@ -27,6 +27,7 @@ public class RedisUtils {
     private RestTemplate restTemplate;
 
     public <T> String postSend(String url, T t) {
+        String body = null;
         //RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
         //RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<String> responseEntity = null;
@@ -37,11 +38,11 @@ public class RedisUtils {
         HttpEntity<String> entity = new HttpEntity<>(jsonString, headers);
         try {
             responseEntity = restTemplate.postForEntity(url, entity, String.class);
+            body = responseEntity.getBody();
         } catch (Exception e) {
             log.error(e.toString());
             e.printStackTrace();
         }
-        String body = responseEntity.getBody();//{"msg":"调用成功！","code":1}
         return body;
     }
 
@@ -56,8 +57,4 @@ public class RedisUtils {
         return t;
     }
 
-    public static void main(String[] args) {
-        CmsResCameraOnvifInfo c = new CmsResCameraOnvifInfo();
-        // RedisUtils.postSend("dsfsdf",c);
-    }
 }

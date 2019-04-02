@@ -13,4 +13,6 @@ public interface CmsResCameraPresetInfoMapper {
     List<CmsResCameraPresetInfo> selectCount(@Param("code") String code);
 
     int deleteByCode(@Param("code") String code);
+
+    int deleteByCodeAndIndex(@Param("code") String code, @Param("index") Integer index);
 }
